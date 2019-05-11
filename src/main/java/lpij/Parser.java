@@ -13,6 +13,10 @@ public class Parser {
         this.length = tokens.size();
     }
 
+    /**
+     * this method parses the loopProgram from the tokens
+     * @return the whole AbstractLoopProgram as an AST
+     */
     public AbstractLoopProgram parseLoopProgram() {
         Token token = peek();
         if (token.type == TokenType.VARIABLE) {
@@ -37,6 +41,13 @@ public class Parser {
         throw new ParseException(token.index, null, "couldn't parseLoopProgram");
     }
 
+    /**
+     * this method parses a loop from the tokens
+     * a loop is of the form
+     * LOOP <<variable>> DO <<body>> END
+     *
+     * @return the parsed Loop
+     */
     private AbstractLoopProgram.Loop loop() {
         consume(TokenType.LOOP);
         Token loopVariable = consume(TokenType.VARIABLE);
@@ -46,6 +57,10 @@ public class Parser {
         return new AbstractLoopProgram.Loop(loopVariable, body);
     }
 
+    /**
+     * this method parses an assignment from the following tokens
+     * @return the parsed Assignment
+     */
     private AbstractLoopProgram.Assignment assignment() {
         Token leftVariable = consume(TokenType.VARIABLE);
         consume(TokenType.ASSIGNMENT);

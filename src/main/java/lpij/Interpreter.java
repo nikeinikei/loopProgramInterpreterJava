@@ -15,14 +15,21 @@ public class Interpreter implements AbstractLoopProgram.Visitor<Void> {
         for (int i = 0; i < variableValues.length; i++) {
             variableValues[i] = 0;
         }
+
+        //we need to put the initial variables in to their respective locations
+        //in the variableValues array
         for (int i = 0; i < args.length; i++) {
+            //offset of one since the first slot is reserved for the result (x0)
             int index = i + 1;
-            var mappedIndex = variableMapping.map.get(index);
+            var mappedIndex = variableMapping.get(index);
+
+            //sanity checks
             if (mappedIndex != null && mappedIndex < variableValues.length) {
                 variableValues[mappedIndex] = args[i];
             }
         }
 
+        //run it
         program.accept(this);
         return variableValues[0];
     }
@@ -33,11 +40,11 @@ public class Interpreter implements AbstractLoopProgram.Visitor<Void> {
         Integer index2 = (Integer) assignment.rightVariable.value;
         Integer number = (Integer) assignment.number.value;
         if (assignment.operator.type == TokenType.PLUS) {
-            variableValues[variableMapping.map.get(index1)] = variableValues[variableMapping.map.get(index2)] + number;
+            variableValues[variableMapping.get(index1)] = variableValues[variableMapping.get(index2)] + number;
         } else if (assignment.operator.type == TokenType.MINUS) {
-            variableValues[variableMapping.map.get(index1)] = Math.max(variableValues[variableMapping.map.get(index2)] - number, 0);
+            variableValues[variableMapping.get(index1)] = Math.max(variableValues[variableMapping.get(index2)] - number, 0);
         } else {
-            throw new IllegalStateException("this shouldn't happen");
+            throw new IllegalStateException("expected a PLUS or a MINUS token as operator, internal error?");
         }
 
         return null;
@@ -54,7 +61,7 @@ public class Interpreter implements AbstractLoopProgram.Visitor<Void> {
     @Override
     public Void visitLoop(AbstractLoopProgram.Loop loop) {
         Integer variableIndex = (Integer) loop.loopVariable.value;
-        int loopCount = variableValues[variableMapping.map.get(variableIndex)];
+        int loopCount = variableValues[variableMapping.get(variableIndex)];
         for (int i = 0; i < loopCount; i++) {
             loop.body.accept(this);
         }
