@@ -1,9 +1,11 @@
 package lpij;
 
+import java.util.Arrays;
+
 public class Interpreter implements AbstractLoopProgram.Visitor<Void> {
-    private int[] variableValues;
-    private VariableMapping variableMapping;
-    private AbstractLoopProgram program;
+    private final int[] variableValues;
+    private final VariableMapping variableMapping;
+    private final AbstractLoopProgram program;
 
     public Interpreter(AbstractLoopProgram program, VariableMapping mapping) {
         this.program = program;
@@ -12,9 +14,7 @@ public class Interpreter implements AbstractLoopProgram.Visitor<Void> {
     }
 
     public int execute(int[] args) {
-        for (int i = 0; i < variableValues.length; i++) {
-            variableValues[i] = 0;
-        }
+        Arrays.fill(variableValues, 0);
 
         //we need to put the initial variables in to their respective locations
         //in the variableValues array

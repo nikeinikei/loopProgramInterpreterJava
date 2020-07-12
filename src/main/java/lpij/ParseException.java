@@ -1,8 +1,8 @@
 package lpij;
 
 public class ParseException extends Error {
-    private int index;
-    private String strippedSource;
+    private final int index;
+    private final String strippedSource;
 
     public ParseException(int index, String strippedSource, String message) {
         super(message);

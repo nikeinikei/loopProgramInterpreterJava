@@ -14,9 +14,9 @@ public class Lexer implements Iterator<Token> {
         identifiers.put("END", TokenType.END);
     }
 
-    private String input;
+    private final String input;
     private int index;
-    private int length;
+    private final int length;
 
     public Lexer(String input) {
         this.input = input

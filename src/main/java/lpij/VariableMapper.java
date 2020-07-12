@@ -15,8 +15,8 @@ import java.util.Map;
 public class VariableMapper implements AbstractLoopProgram.Visitor<Void> {
     //starting at one since this is always the return value of the loop program
     private int length = 1;
-    private Map<Integer, Integer> variableMap = new HashMap<>();
-    private AbstractLoopProgram program;
+    private final Map<Integer, Integer> variableMap = new HashMap<>();
+    private final AbstractLoopProgram program;
 
     public VariableMapper(AbstractLoopProgram program) {
         this.program = program;

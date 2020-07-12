@@ -3,9 +3,9 @@ package lpij;
 import java.util.List;
 
 public class Parser {
-    private List<Token> tokens;
+    private final List<Token> tokens;
     private int index;
-    private int length;
+    private final int length;
 
     public Parser(List<Token> tokens) {
         this.tokens = tokens;

@@ -8,3 +8,9 @@ out
 .gradle
 gradle
 loopProgram.txt
+
+.settings
+.project
+.classpath
+program.txt
+bin
